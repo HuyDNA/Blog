@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel index.js -d lib",
+    "build": "babel src -d lib",
     "start": "npm run server",
     "server": "lite-server"
   },
@@ -23,6 +23,7 @@
     "@babel/cli": "^7.18.9",
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
+    "@babel/preset-react": "^7.18.6",
     "lite-server": "^2.6.1"
   }
 }
