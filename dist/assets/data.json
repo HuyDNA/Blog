@@ -5,15 +5,8 @@
             {
                 "title": "Sylvester's criterion for positive-definite real matrices",
                 "tags": ["Linear Algebra"],
-                "writtenOn": "20/07/2022",
-                "content": "test" 
+                "writtenOn": "20/07/2022"
             }
-        ]
-    },
-    {
-        "category": "Data Science",
-        "posts": [
-            
         ]
     }
 ]
