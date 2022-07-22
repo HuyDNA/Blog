@@ -23,8 +23,7 @@ class App extends React.Component {
 
         fetch(postPath + postData.title + ".md")
         .then(reponse => reponse.text())
-        .then(reponse => {
-                this.setState(prevState => {
+        .then(reponse => this.setState(prevState => {
                 const stateCopy = Object.assign({}, prevState);
                 stateCopy.currentTab = ++stateCopy.highestTabIdAssigned;
                 stateCopy.openedTabs.push({
@@ -36,8 +35,8 @@ class App extends React.Component {
                     content: reponse, 
                 });
                 return stateCopy;
-            });
-        })
+            })
+        )
         .catch(error => console.log("Error while fetching post: ", error));
     }
 
@@ -79,10 +78,10 @@ class App extends React.Component {
     render() {
         return ( 
             <>
-                <Header>
+                <HeaderBox>
                     <h1> Welcome to my blog! </h1>
                     <p> This is my writing place! I will write some random things in here!!</p>
-                </Header>
+                </HeaderBox>
                 <TabbedSection currentTab={this.state.currentTab}
                                openedTabs={this.state.openedTabs}
                                handlePostLinkClick={this.handlePostLinkClick}
@@ -234,7 +233,7 @@ class PostLink extends React.Component {
     }   
 }
 
-function Header(props) {
+function HeaderBox(props) {
     return (
         <header className="jumbotron bg-primary text-white mb-0 rounded-0">
             {props.children}           
