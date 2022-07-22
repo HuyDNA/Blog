@@ -1,5 +1,5 @@
 const postPath = "./assets/posts/"
-const maximumOpenedTabs = 4
+const maximumOpenedTabs = 6
 
 class App extends React.Component {
     state = {
@@ -15,8 +15,10 @@ class App extends React.Component {
     };
 
     handlePostLinkClick = (postData) => {
-        if (openedTabs.length >= maximumOpenedTabs) 
+        if (this.state.openedTabs.length >= maximumOpenedTabs) {
             alert("You have to close one tab in order to open a new tab"); 
+            return;
+        }
         //to be changed
 
         fetch(postPath + postData.title + ".md")
