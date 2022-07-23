@@ -14,5 +14,7 @@ For now is the summertime, I've decided to revisit some of the results to try to
 
 <br>
 
+The theorem I'm about to prove has to do with quadratic form of symmetric matrices. Let's dive in!!!
+
 ## <span style="color:#339CFF"> The problem's statement </span>
 </div>

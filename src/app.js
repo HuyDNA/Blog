@@ -14,30 +14,14 @@ class App extends React.Component {
         highestTabIdAssigned: 1,
     };
 
-    handlePostLinkClick = (postData) => {
+    handlePostLinkClick = (postInfo) => {
         if (this.state.openedTabs.length >= maximumOpenedTabs) {
             alert("You have to close one tab in order to open a new tab"); 
             return;
         }
         //to be changed
-
-        fetch(postPath + postData.title + ".md")
-        .then(reponse => reponse.text())
-        .then(reponse => this.setState(prevState => {
-                const stateCopy = Object.assign({}, prevState);
-                stateCopy.currentTab = ++stateCopy.highestTabIdAssigned;
-                stateCopy.openedTabs.push({
-                    title: postData.title,
-                    meta: {
-                        writtenOn: postData.writtenOn
-                    },
-                    id: stateCopy.highestTabIdAssigned,
-                    content: reponse, 
-                });
-                return stateCopy;
-            })
-        )
-        .catch(error => console.log("Error while fetching post: ", error));
+        
+        this.fetchPost(postInfo);
     }
 
     handleTabButtonClick = (tabId) => {
@@ -90,6 +74,26 @@ class App extends React.Component {
                 />
             </>
         );
+    }
+
+    fetchPost(postInfo) {
+        fetch(postPath + postInfo.title + ".md")
+        .then(reponse => reponse.text())
+        .then(reponse => this.setState(prevState => {
+                const stateCopy = Object.assign({}, prevState);
+                stateCopy.currentTab = ++stateCopy.highestTabIdAssigned;
+                stateCopy.openedTabs.push({
+                    title: postInfo.title,
+                    meta: {
+                        writtenOn: postInfo.writtenOn
+                    },
+                    id: stateCopy.highestTabIdAssigned,
+                    content: reponse, 
+                });
+                return stateCopy;
+            })
+        )
+        .catch(error => console.log("Error while fetching post: ", error));
     }
 };
 
@@ -211,7 +215,7 @@ class CategoryPostList extends React.Component {
                 {
                     this.props.posts.map(
                         post => <li key={post.title}>
-                                    <PostLink postData={post} 
+                                    <PostLink postInfo={post} 
                                               handlePostLinkClick={this.props.handlePostLinkClick}/>
                                 </li>    
                     )
@@ -223,12 +227,12 @@ class CategoryPostList extends React.Component {
 
 class PostLink extends React.Component {
     handlePostLinkClick = (e) => {
-        this.props.handlePostLinkClick(this.props.postData);
+        this.props.handlePostLinkClick(this.props.postInfo);
     }
     render() {
-        const tags = this.props.postData.tags.map(tag => <span key={tag}> <span className="badge badge-pill badge-info"> {tag} </span> </span>);
+        const tags = this.props.postInfo.tags.map(tag => <span key={tag}> <span className="badge badge-pill badge-info"> {tag} </span> </span>);
         return (
-            <p><a href="#" className="link-primary" onClick={this.handlePostLinkClick}>{this.props.postData.title}</a> {tags}</p>
+            <p><a href="#" className="link-primary" onClick={this.handlePostLinkClick}>{this.props.postInfo.title}</a> {tags}</p>
         );
     }   
 }

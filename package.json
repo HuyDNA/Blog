@@ -31,6 +31,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
+    "argon2": "^0.28.7",
     "react-markdown": "^8.0.3"
   }
 }
