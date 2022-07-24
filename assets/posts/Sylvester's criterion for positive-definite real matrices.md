@@ -16,5 +16,16 @@ For now is the summertime, I've decided to revisit some of the results to try to
 
 The theorem I'm about to prove has to do with quadratic form of symmetric matrices. Let's dive in!!!
 
-## <span style="color:#339CFF"> The problem's statement </span>
+## <span style="color:#339CFF"> Prerequisite knowledge </span>
+
+<div class="card"><div class="card-header"> 
+
+**Definition.** Quadratic form of symmetric matrices.</div>
+<div class="card-body">  Given a symmetric matrix $A$.</div>    
+</div>
+
+<div class="card card-body">
+
+</div>
+
 </div>
