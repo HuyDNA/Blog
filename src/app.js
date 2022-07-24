@@ -3,34 +3,82 @@ const maximumOpenedTabs = 6
 
 class App extends React.Component {
     state = {
-        currentTab: 1,
-        openedTabs: [
+        currentTab: 1,                 //current navigated tab's id
+        openedTabs: [                  //list of opened tabs
             {
                 title: "Main",
                 id: 1,
                 content: [],
             }
         ],
-        highestTabIdAssigned: 1,
+        highestTabIdAssigned: 1,       //id generator
+                                       //increases every time a new tab is created and is assigned to that tab 
     };
 
     handlePostLinkClick = (postInfo) => {
+        /*Handle clicks on post links in the Main page.
+        Given,
+            postInfo: containing the link-clicked post's metadata
+        --------------------------------------------------------
+        */
+        
+        //only up to 6 tabs supported
+        //to be changed
         if (this.state.openedTabs.length >= maximumOpenedTabs) {
             alert("You have to close one tab in order to open a new tab"); 
             return;
         }
-        //to be changed
-        
+
+        //
         this.fetchPost(postInfo);
+    }
+    
+    fetchPost(postInfo) {
+        /*Fetch posts in markdown format located in postPath.
+          Then updating App's state accordingly.
+        Given,
+            postInfo: the about-to-fetched post's metadata.
+        ---------------------------------------------------------
+        */
+
+        fetch(postPath + postInfo.title + ".md")
+        .then(reponse => reponse.text())
+        .then(reponse => this.setState(prevState => {
+                const stateCopy = Object.assign({}, prevState);
+                stateCopy.currentTab = ++stateCopy.highestTabIdAssigned;
+                stateCopy.openedTabs.push({
+                    title: postInfo.title,
+                    meta: {
+                        writtenOn: postInfo.writtenOn
+                    },
+                    id: stateCopy.highestTabIdAssigned,
+                    content: reponse, 
+                });
+                return stateCopy;
+            })
+        )
+        .catch(error => console.log("Error while fetching post: ", error));
     }
 
     handleTabButtonClick = (tabId) => {
+        /*Handle clicks on tab buttons.
+        Given,
+            tabId: the clicked tab's id.
+        ---------------------------------------------------------
+        */
+
         this.setState({
             currentTab: tabId
         });
     }
 
     handleTabButtonClose = (tabId) => {
+        /*Handle clicks on tab buttons' close box.
+        Given,
+            tabId: the about-to-closed tab's id.
+        ---------------------------------------------------------
+        */
+
         this.setState(prevState => {
             const tabPosInArray = prevState.openedTabs.findIndex(tab => tab.id === tabId);
             if (tabPosInArray === -1)
@@ -44,6 +92,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        //fetch data for the Main page when App is mounted.
+        //to be changed
         fetch("./assets/data.json")
             .then(reponse => reponse.json())
             .then(reponse => this.setState({
@@ -57,6 +107,11 @@ class App extends React.Component {
                     }
                 ],
             }));
+    }
+
+    componentDidUpdate() {
+        //Reparse Maths when display updated
+        MathJax.Hub.Typeset();      
     }
 
     render() {
@@ -76,25 +131,7 @@ class App extends React.Component {
         );
     }
 
-    fetchPost(postInfo) {
-        fetch(postPath + postInfo.title + ".md")
-        .then(reponse => reponse.text())
-        .then(reponse => this.setState(prevState => {
-                const stateCopy = Object.assign({}, prevState);
-                stateCopy.currentTab = ++stateCopy.highestTabIdAssigned;
-                stateCopy.openedTabs.push({
-                    title: postInfo.title,
-                    meta: {
-                        writtenOn: postInfo.writtenOn
-                    },
-                    id: stateCopy.highestTabIdAssigned,
-                    content: reponse, 
-                });
-                return stateCopy;
-            })
-        )
-        .catch(error => console.log("Error while fetching post: ", error));
-    }
+   
 };
 
 class TabbedSection extends React.Component {
