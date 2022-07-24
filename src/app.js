@@ -92,26 +92,77 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        //fetch data for the Main page when App is mounted.
-        //to be changed
+        /*#########Cases that problems arise:
+            - Some post in cache was deleted, fetch will fail
+            - Cached local state is corrupted
+        */
+
+        const cachedLocalState = JSON.parse(localStorage.getItem("localBlogStorage"));
+        cachedLocalState.openedTabs.forEach(tab => {
+            tab.content = this.fetchPost(tab.title);
+        });
+        this.setState(cachedLocalState);
+        
+        /*
         fetch("./assets/data.json")
-            .then(reponse => reponse.json())
-            .then(reponse => this.setState({
-                currentTab: 1,
-                highestTabIdAssigned: 1,
-                openedTabs: [
-                    {
-                        title: "Main",
-                        id: 1,
-                        content: reponse,
-                    }
-                ],
-            }));
+        .then(reponse => reponse.json())
+        .then(reponse => this.setState({
+            currentTab: 1,
+            highestTabIdAssigned: 1,
+            openedTabs: [
+                {
+                    title: "Main",
+                    id: 1,
+                    content: reponse,
+                }
+            ],
+        }));*/
     }
 
     componentDidUpdate() {
         //Reparse Maths when display updated
         MathJax.Hub.Typeset();      
+
+        //Cache the App's state to localStorage
+        //#################partial validity checking will be added later
+        localStorage.setItem("localBlogStorage", JSON.stringify(this.getTabBarState()));
+    }
+
+    getTabBarState() {
+        /* Return an object of the following form 
+            resembling the App's state
+            but all of the posts' contents are empty:
+            {
+                currentTab: <currently navigated tab>
+                openedTabs: [
+                    {
+                        title: <associated post's title>
+                        id: <tab id>,
+                        content: ''
+                    }
+                ]
+                highestTabIdAssigned: <length of openedTabs>
+            }
+        */
+
+        const stateObj = {
+            currentTab: null,
+            openedTabs: [],
+            highestTabIdAssigned: this.state.openedTabs.length
+        };
+
+        this.state.openedTabs.forEach((tab, tabPosInArray) => {
+            if (tab.id === this.state.currentTab)
+                stateObj.currentTab = tabPosInArray
+            
+            stateObj.openedTabs.push({
+                title: tab.title,
+                id: tabPosInArray,
+                content: ''
+            })
+        });
+
+        return stateObj;
     }
 
     render() {
