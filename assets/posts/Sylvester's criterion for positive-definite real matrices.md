@@ -61,5 +61,5 @@ And because $|\Delta_{n+1}|> 0$, $\begin{vmatrix}\boldsymbol{D} & \boldsymbol{v}
 
 We can set $\boldsymbol{B} = \begin{pmatrix} \boldsymbol{D} & \boldsymbol{v} \\\\ \boldsymbol{v}^T & x \end{pmatrix}$. Notice that $\boldsymbol{Q}$ is an orthogonal matrix as $\boldsymbol{Q}\boldsymbol{Q}^T = \boldsymbol{I}$. Then because $\boldsymbol{A} = \boldsymbol{Q}\boldsymbol{B}\boldsymbol{Q}^T = \boldsymbol{Q}\boldsymbol{B}\boldsymbol{Q}^{-1} $, $\boldsymbol{A}$ is *similar* to $\boldsymbol{B}$. As a result, $\boldsymbol{A}$ and $\boldsymbol{B}$ share the same eigenvalue set.
 
-Therefore, it's sufficient to show that $\boldsymbol{B}$ is positive-definite. If $\boldsymbol{B}$ really is, all of $\boldsymbol{B}$'s eigenvalues - which is also $\boldsymbol{A}$'s - would be positive. Then, according to **Theorem 2.**, $\boldsymbol{A}$ is positive-definite.
+Therefore, it's sufficient to show that $\boldsymbol{B}$ is positive-definite. If $\boldsymbol{B}$ really is, all of $\boldsymbol{B}$'s eigenvalues - which are also $\boldsymbol{A}$'s - would be positive. Then, according to **Theorem 2.**, $\boldsymbol{A}$ is positive-definite.
 </div>
