@@ -43,9 +43,9 @@ Sylvester's criterion gives a necessary and sufficient criterion for a symmetric
 
 ## <span style="color:#339CFF"> Proof</span>
 
-* *Sylvester's criterion is sufficient for a symmetric $\boldsymbol{A}$ to be positive-definite*.
+* *Sylvester's criterion is sufficient for a symmetric $\boldsymbol{A}$ to be positive-definite* (1).
 
-**Proof.** Prove by induction on the size of $\boldsymbol{A}$ (1).
+**Proof.** Prove by induction on the size of $\boldsymbol{A}$.
 
 *The base case.* It's trivial to prove the case where $\boldsymbol{A} \in M_1$.
 
