@@ -4,7 +4,7 @@
 Written on: 20/7/2022
 <hr>
 
-Sometimes, I still have flashbacks of the time we have to learn Linear Algebra and Calculus at university. They are not necessarily hard but they really do give me kind of a struggle. The problem I have was the way they were taught, kinda like "Here we apply this.... and boom! Problem solved" with no further explanations as to why it works. It just works! This made me *SUPER* frustrated as I have always needed to know how something works before actually make it work.
+Sometimes, I still have flashbacks of the time we had to learn Linear Algebra and Calculus at university. They were not necessarily hard but they really did give me kind of a struggle. The problem I had was the way they were taught, kinda like "Here we apply this.... and boom! Problem solved" with no further explanations as to why it worked. It just worked! This made me *SUPER* frustrated as I have always needed to know how something works before actually make it work.
 
 As for Linear Algebra, this was a whole new area for me. At first, topics like Gaussian elimination, determinant, vector space or orthogonal matrix did not really give me a hard time. I did stumble here and there but overall I could prove most relevant mathematical results easily. However, the last few topics such as eigenvalues and quadratic forms were incredibly hard. The mathematical results were kinda unintuitive. At some time, I gave up and just learned the results by heart and how to apply it anyways. I did look up some of the proofs but apparently, this did not satisfy me.
 
