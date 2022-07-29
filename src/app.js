@@ -1,6 +1,9 @@
 const postPath = "./assets/posts/"
 const maximumOpenedTabs = 6
 const mainPath = "./assets/data.json"
+
+import MainPage from "./mainPage.js"
+import PostPage from "./postPage.js"
 class App extends React.Component {
     state = {
         currentTab: 1,                 //current navigated tab's id
@@ -91,47 +94,57 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        /* After App is successfully mounted, the expected behaviour is:
+            fetch data.json from mainPath to render the main page.
+            fetch all posts whose titles are cached in localStorage.
+                if fetching any one of these posts fail (maybe because it has been deleted),
+                it will be ignored.
+                if cached local state is corrupted, **MAYBE** it will just be ignored.
+        --------------------------------------------------------
+        */
+
         /*#########Cases that problems arise:
-            - Some post in cache was deleted, fetch will fail
             - Cached local state is corrupted
         */
-        fetch("./assets/data.json")
-            .then(reponse => reponse.json())
-            .then(reponse => this.setState({
-                currentTab: 1,
-                highestTabIdAssigned: 1,
-                openedTabs: [
-                    {
-                        title: "Main",
-                        id: 1,
-                        content: reponse,
-                    }
-                ],
-            }));
-        
-        try {
+
+        fetch(mainPath)
+        .then(reponse => reponse.json())
+        .then(reponse => this.setState({
+            currentTab: 1,
+            highestTabIdAssigned: 1,
+            openedTabs: [
+                {
+                    title: "Main",
+                    id: 1,
+                    content: reponse,
+                }
+            ],
+        }))
+        .then(reponse => {
             const cachedLocalState = JSON.parse(localStorage.getItem("localBlogStorage"));
-            Promise.all(
+            Promise.allSettled(
                 cachedLocalState.openedPosts.map(postTitle => this.fetchPost(postTitle))
             ).then(reponse => this.setState({currentTab: cachedLocalState.currentPost}));
-        } catch (e) {}
+        })
+        .catch(reason => console.log("componentDidMount: ", reason))
     }
 
     componentDidUpdate() {
         //Reparse Maths when display updated
         MathJax.Hub.Typeset();      
 
-        //Cache the App's state to localStorage
+        //Cache the App's state (currently opened tabs and navigated tab) to localStorage
         //#################partial validity checking will be added later
-        localStorage.setItem("localBlogStorage", JSON.stringify(this.getTabBarState()));
+        localStorage.setItem("localBlogStorage", JSON.stringify(this.getPostState()));
     }
 
-    getTabBarState() {
+    getPostState() {
         /* Return an object of the following form 
             {
                 currentPost: <Number>
                 openedPosts: [...<post's title>]
             }
+        -------------------------------------------------------
         */
 
         const stateObj = {
@@ -229,9 +242,9 @@ class TabButton extends React.Component {
 class TabbedContent extends React.Component {
     render() {
         const contentElem = (this.props.tabData.id === 1) ? 
-                <MainContent tabData={this.props.tabData}
+                <MainPage tabData={this.props.tabData}
                              handlePostLinkClick={this.props.handlePostLinkClick}
-                /> : <PostContent tabData={this.props.tabData}/>;
+                /> : <PostPage tabData={this.props.tabData}/>;
         return (
             <div className="pt-3">
                 <div className="container">
@@ -243,73 +256,9 @@ class TabbedContent extends React.Component {
 }
 
 
-class PostContent extends React.Component {
-    render() {
-        return (
-            <article dangerouslySetInnerHTML={{__html: marked.parse(this.props.tabData.content)}}>
-            </article>
-        )
-    }
-}
 
-class MainContent extends React.Component {
-    render() {
-        return (
-            this.props.tabData.content.map(categoryData => 
-                <CategoryPostSection key={categoryData.category} data={categoryData}
-                                     handlePostLinkClick={this.props.handlePostLinkClick}
-                />
-            )
-        );
-    }
-};
 
-class CategoryPostSection extends React.Component {
-    render() {
-        return (
-            <div className="card">
-                <p className="card-header" data-toggle="collapse" href={"#" + this.props.data.category}> 
-                    {this.props.data.category} <span className="badge badge-pill badge-primary">{this.props.data.posts.length}</span>
-                </p>
-                <div className="card-body collapse" id={this.props.data.category}>
-                    {
-                        <CategoryPostList posts={this.props.data.posts} 
-                                          handlePostLinkClick={this.props.handlePostLinkClick}/>
-                    }
-                </div>
-            </div>
-        );
-    }
-};
 
-class CategoryPostList extends React.Component {
-    render() {
-        return (
-            <ul>
-                {
-                    this.props.posts.map(
-                        post => <li key={post.title}>
-                                    <PostLink postInfo={post} 
-                                              handlePostLinkClick={this.props.handlePostLinkClick}/>
-                                </li>    
-                    )
-                }
-            </ul>
-        );
-    }
-}
-
-class PostLink extends React.Component {
-    handlePostLinkClick = (e) => {
-        this.props.handlePostLinkClick(this.props.postInfo);
-    }
-    render() {
-        const tags = this.props.postInfo.tags.map(tag => <span key={tag}> <span className="badge badge-pill badge-info"> {tag} </span> </span>);
-        return (
-            <p><a href="#" className="link-primary" onClick={this.handlePostLinkClick}>{this.props.postInfo.title}</a> {tags}</p>
-        );
-    }   
-}
 
 function HeaderBox(props) {
     return (
