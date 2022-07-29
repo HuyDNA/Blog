@@ -4,7 +4,7 @@
         "posts": [
             {
                 "title": "Sylvester's criterion for positive-definite real matrices",
-                "tags": ["Linear Algebra"],
+                "tags": ["Linear Algebra", "Theorem"],
                 "writtenOn": "20/07/2022"
             }
         ]
