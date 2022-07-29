@@ -116,5 +116,5 @@ This is actually simple, from **Theorem 1.**, we know that $\boldsymbol{A}$ is a
 
 Moreover, because $\boldsymbol{A}$ is positive-definite, $\boldsymbol{D}$ can be easily proved to be positive-definite (Hint: use the above result $\boldsymbol{A}= \boldsymbol{P}^{T}\boldsymbol{D}\boldsymbol{P}$).
 
-We can conclude that $|D| > 0$, so $|A| > 0$. We're now done with the induction step and it follows that (ii) must be true for all size of $\boldsymbol{A}$.s
+We can conclude that $|D| > 0$, so $|A| > 0$. We're now done with the induction step and it follows that (ii) must be true for all size of $\boldsymbol{A}$.
 </div>
