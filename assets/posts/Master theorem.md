@@ -1,6 +1,6 @@
 <div style="text-align:justify">
 
-# <span style="color:#339CFF"> Master Theorem &lt; incomplete &gt; </span>
+# <span style="color:#339CFF"> Master Theorem</span>
 Written on: 30/07/2022
 <hr>
 
