@@ -2,7 +2,7 @@
         Components for rendering the main page.
 */
 
-import { PostLink } from "./basic.js"
+import { Link } from "./basic.js"
 class MainPage extends React.Component {
     render() {
         return (
@@ -50,6 +50,24 @@ class CategoryPostList extends React.Component {
     }
 }
 
-
+class PostLink extends React.Component {
+    /*Component representing links to posts.
+    Expected props:
+        postInfo: an object containing information about the associated post,
+                    this object should have a field named "title"
+        handlePostLinkClick: an event handler for handling clicks on the link.
+    */
+    
+    handlePostLinkClick = (e) => {
+        this.props.handlePostLinkClick(this.props.postInfo);
+    }
+    
+    render() {
+        const tags = this.props.postInfo.tags.map(tag => <span key={tag}> <span className="badge badge-pill badge-info"> {tag} </span> </span>);
+        return (
+            <p> <Link handleLinkClick={this.handlePostLinkClick}>{this.props.postInfo.title}</Link> {tags}</p>
+        );
+    }   
+}
 
 export default MainPage;
