@@ -2,6 +2,7 @@
         Components for rendering the main page.
 */
 
+import { PostLink } from "./basic.js"
 class MainPage extends React.Component {
     render() {
         return (
@@ -49,16 +50,6 @@ class CategoryPostList extends React.Component {
     }
 }
 
-class PostLink extends React.Component {
-    handlePostLinkClick = (e) => {
-        this.props.handlePostLinkClick(this.props.postInfo);
-    }
-    render() {
-        const tags = this.props.postInfo.tags.map(tag => <span key={tag}> <span className="badge badge-pill badge-info"> {tag} </span> </span>);
-        return (
-            <p><a href="#" className="link-primary" onClick={this.handlePostLinkClick}>{this.props.postInfo.title}</a> {tags}</p>
-        );
-    }   
-}
+
 
 export default MainPage;

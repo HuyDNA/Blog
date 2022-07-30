@@ -4,9 +4,10 @@ const mainPath = "./assets/data.json"
 
 import MainPage from "./mainPage.js"
 import PostPage from "./postPage.js"
+
 class App extends React.Component {
     state = {
-        currentTab: 1,                 //current navigated tab's id
+        currentTab: 1,                 //currently navigated tab's id
         openedTabs: [                  //list of opened tabs
             {
                 title: "Main",
@@ -26,7 +27,7 @@ class App extends React.Component {
         */
         
         //only up to 6 tabs supported
-        //to be changed
+        //may changed in the future
         if (this.state.openedTabs.length >= maximumOpenedTabs) {
             alert("You have to close one tab in order to open a new tab"); 
             return;
@@ -103,7 +104,7 @@ class App extends React.Component {
         --------------------------------------------------------
         */
 
-        /*#########Cases that problems arise:
+        /*#########Cases that problems may arise (??):
             - Cached local state is corrupted
         */
 
@@ -254,11 +255,6 @@ class TabbedContent extends React.Component {
         )
     }
 }
-
-
-
-
-
 
 function HeaderBox(props) {
     return (
