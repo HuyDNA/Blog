@@ -123,7 +123,7 @@ class App extends React.Component {
         }))
         .then(reponse => {
             const cachedLocalState = JSON.parse(localStorage.getItem("localBlogStorage"));
-            Promise.allSettled(
+            return Promise.allSettled(
                 cachedLocalState.openedPosts.map(postTitle => this.fetchPost(postTitle))
             ).then(reponse => this.setState({currentTab: cachedLocalState.currentPost}));
         })

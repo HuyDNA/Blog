@@ -12,11 +12,7 @@
     {
         "category": "DSA",
         "posts": [
-            {
-                "title": "Master theorem",
-                "tags": ["CS"],
-                "writtenOn": "30/07/2022"
-            }
+            
         ]
     }
 ]
